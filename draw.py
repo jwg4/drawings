@@ -40,7 +40,7 @@ def generate_rectangles(n, r1, r2, theta1, theta2):
     MEAN_WIDTH = 0.4
     MEAN_HEIGHT = 0.6
 
-    for i in range(0, n+1):
+    for i in range(0, n):
         r = r1 + i * ((r2 - r1) / (n-1))
         theta = uniform(theta1, theta2)
         width = uniform(MEAN_WIDTH * 0.5, MEAN_WIDTH * 1.5)

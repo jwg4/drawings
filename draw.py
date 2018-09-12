@@ -45,26 +45,22 @@ def generate_rectangles(n, r1, r2, theta1, theta2):
         theta = uniform(theta1, theta2)
         width = uniform(MEAN_WIDTH * 0.5, MEAN_WIDTH * 1.5)
         height = uniform(MEAN_HEIGHT * 0.5, MEAN_HEIGHT * 1.5)
-        yield (r, theta, width, height)
+        percent = int(i * 80 / n) + 20
+        color = "gray!%d!white" % percent 
+        yield (r, theta, width, height), color
 
 
-def draw_line(a, b, color="black"):
-    TEMPLATE = "    \draw[%s] (%.02f,%.02f) -- (%.02f,%.02f);\n"
-    s = TEMPLATE % (color, a[0], a[1], b[0], b[1])
-    return s
-
-
-def draw_rectangle(p1, p2):
+def draw_rectangle(p1, p2, fill):
     x1, y1 = p1
     x2, y2 = p2
-    TEMPLATE = "    \\filldraw[fill=gray,draw=black] (%f, %f) -- (%f, %f) -- (%f, %f) -- (%f, %f) -- cycle;\n"
-    yield TEMPLATE % (x1, y1, x1, y2, x2, y2, x2, y1)
+    TEMPLATE = "    \\filldraw[fill=%s,draw=black] (%f, %f) -- (%f, %f) -- (%f, %f) -- (%f, %f) -- cycle;\n"
+    yield TEMPLATE % (fill, x1, y1, x1, y2, x2, y2, x2, y1)
 
 
 if __name__ == '__main__':
     N = 200
     with open("buildings.tex", "w") as f:
-        for rect in generate_rectangles(N, 1.2, 8, 0, SCOPE_1):
+        for rect, color in generate_rectangles(N, 1.2, 8, 0, SCOPE_1):
             projection = project_rectangle(*rect)
-            for line in draw_rectangle(*projection):
+            for line in draw_rectangle(*projection, fill=color):
                 f.write(line)

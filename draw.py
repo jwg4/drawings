@@ -48,8 +48,24 @@ def generate_rectangles(n, r1, r2, theta1, theta2):
         yield (r, theta, width, height)
 
 
+def draw_line(a, b, color="black"):
+    TEMPLATE = "    \draw[%s] (%.02f,%.02f) -- (%.02f,%.02f);"
+    s = TEMPLATE % (color, a[0], a[1], b[0], b[1])
+    return s
+
+
+def draw_rectangle(p1, p2):
+    x1, y1 = p1
+    x2, y2 = p2
+    yield draw_line((x1, y1), (x1, y2))
+    yield draw_line((x1, y2), (x2, y2))
+    yield draw_line((x2, y2), (x2, y1))
+    yield draw_line((x2, y1), (x1, y1))
+
+
 if __name__ == '__main__':
     N = 2
     for rect in generate_rectangles(N, 5, 10, 0, SCOPE_1):
         projection = project_rectangle(*rect)
-        print(projection)
+        for line in draw_rectangle(*projection):
+            print(line)

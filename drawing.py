@@ -17,8 +17,26 @@ def draw_contour(contour):
         start = point
 
 
-def line_max(x, y):
-    return x
+def line_max(a, b):
+    a1 = next(a, (0, 0))
+    b1 = next(b, (0, 0))
+    a_over = b_over = False
+    while not (a_over and b_over):
+        if (not a_over and a1[0] <= b1[0]) or b_over:
+            ay = a1[1]
+            x = a1[0]
+            try:
+                a1 = next(a)
+            except StopIteration:
+                a_over = True
+        if (not b_over and b1[0] <= a1[0]) or a_over:
+            by = b1[1]
+            x = b1[0]
+            try:
+                b1 = next(b)
+            except StopIteration:
+                b_over = True
+        yield (x, max(ay, by))
 
 
 def create_contour(xmax = 100):
@@ -32,7 +50,7 @@ def create_contour(xmax = 100):
 
 
 if __name__ == '__main__':
-    m = None
+    m = [].__iter__()
     for i in range(10):
         print(i)
         f = create_contour()

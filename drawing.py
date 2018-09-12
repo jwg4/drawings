@@ -81,14 +81,25 @@ def create_contour(level=0, xmax=100, scale=5):
     yield (xmax, y)
 
 
+def sizes():
+    for i in range(0, 7):
+        yield 9 - i
+        yield 9 - i
+
+
 if __name__ == '__main__':
+    H_SCALE = 1.5
+    size_l = list(sizes())
+    
     m = []
     height = 0
-    n = 15
-    for i in range(n):
-        size = n - i + 1
-        height = height + size
-        f = list(create_contour(height, 100, size))
+
+    CLIP_LINE = "\\clip (50, %d) rectangle (150, %d);"
+    print(CLIP_LINE % (0, sum(size_l) * H_SCALE + 20))
+
+    for size in size_l:
+        height = height + size * H_SCALE
+        f = list(create_contour(height, 200, size))
         m = list(line_max(f, m))
         for line in draw_contour(m):
             print draw_line(*line)

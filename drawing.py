@@ -8,6 +8,7 @@ def draw_line(a, b, color="black"):
 
 
 def draw_contour(contour):
+    contour = list(contour)
     start = contour[0]
     for point in contour[1:]:
         corner = (point[0], start[1])
@@ -17,7 +18,7 @@ def draw_contour(contour):
 
 
 def line_max(x, y):
-    return list(x)
+    return x
 
 
 def create_contour(xmax = 100):

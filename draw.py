@@ -37,8 +37,8 @@ def project_rectangle(r, theta, width, height):
 
 
 def generate_rectangles(n, r1, r2, theta1, theta2):
-    MEAN_WIDTH = 0.4
-    MEAN_HEIGHT = 0.6
+    MEAN_WIDTH = 0.1
+    MEAN_HEIGHT = 0.3
 
     for i in range(0, n):
         r = r2 - i * ((r2 - r1) / (n-1))
@@ -62,9 +62,9 @@ def draw_rectangle(p1, p2):
 
 
 if __name__ == '__main__':
-    N = 80
+    N = 200
     with open("buildings.tex", "w") as f:
-        for rect in generate_rectangles(N, 2, 8, 0, SCOPE_1):
+        for rect in generate_rectangles(N, 1.2, 8, 0, SCOPE_1):
             projection = project_rectangle(*rect)
             for line in draw_rectangle(*projection):
                 f.write(line)

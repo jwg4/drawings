@@ -18,23 +18,34 @@ def draw_contour(contour):
 
 
 def line_max(a, b):
+    """
+        >>> list(line_max([(0, 41), (63, 49), (86, 58), (100, 58)], [(0, 42), (34, 50), (56, 53), (100, 53)]))
+        [(0, 42), (34, 50), (56, 53), (86, 58), (100, 58)]
+    """
     a = ( A for A in a )
     b = ( B for B in b )
     a_over = b_over = False
     a1 = b1 = (0, 0)
-    ay = by = 0
+    x = ay = by = 0
+    old_my = None
 
     try:
         a1 = next(a)
+        ay = a1[1]
     except StopIteration:
         a_over = True
     try:
         b1 = next(b)
+        by = b1[1]
     except StopIteration:
         b_over = True
 
     while not (a_over and b_over):
         if not a_over and (a1[0] <= b1[0] or b_over):
+            my = max(ay, by)
+            if my != old_my:
+                yield (x, my)
+                old_my = my
             ay = a1[1]
             x = a1[0]
             try:
@@ -42,13 +53,17 @@ def line_max(a, b):
             except StopIteration:
                 a_over = True
         if not b_over and (b1[0] <= a1[0] or a_over):
+            my = max(ay, by)
+            if my != old_my:
+                yield (x, my)
+                old_my = my
             by = b1[1]
             x = b1[0]
             try:
                 b1 = next(b)
             except StopIteration:
                 b_over = True
-        yield (x, max(ay, by))
+    yield (x, my)
 
 
 def create_contour(level=0, xmax=100, scale=5):

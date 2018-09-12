@@ -51,20 +51,23 @@ def line_max(a, b):
         yield (x, max(ay, by))
 
 
-def create_contour(level=0, xmax = 100):
+def create_contour(level=0, xmax=100, scale=5):
     x = 0
     y = level
     while x < xmax:
         yield (x, y)
-        x = x + 5 + randint(0, 10)
-        y = y - 5 + randint(0, 10)
+        x = x + scale + randint(0, 2 * scale)
+        y = y - scale + randint(0, 2 * scale)
     yield (xmax, y)
 
 
 if __name__ == '__main__':
     m = []
+    height = 20
     for i in range(10):
-        f = list(create_contour(i * 5))
+        size = 11 - i
+        height = height + size
+        f = list(create_contour(height, 100, size))
         m = list(line_max(f, m))
         for line in draw_contour(m):
             print draw_line(*line)

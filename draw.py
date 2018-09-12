@@ -57,10 +57,8 @@ def draw_line(a, b, color="black"):
 def draw_rectangle(p1, p2):
     x1, y1 = p1
     x2, y2 = p2
-    yield draw_line((x1, y1), (x1, y2))
-    yield draw_line((x1, y2), (x2, y2))
-    yield draw_line((x2, y2), (x2, y1))
-    yield draw_line((x2, y1), (x1, y1))
+    TEMPLATE = "    \\filldraw[fill=gray,draw=black] (%f, %f) -- (%f, %f) -- (%f, %f) -- (%f, %f) -- cycle;\n"
+    yield TEMPLATE % (x1, y1, x1, y2, x2, y2, x2, y1)
 
 
 if __name__ == '__main__':

@@ -49,7 +49,7 @@ def generate_rectangles(n, r1, r2, theta1, theta2):
 
 
 def draw_line(a, b, color="black"):
-    TEMPLATE = "    \draw[%s, thick] (%.02f,%.02f) -- (%.02f,%.02f);\n"
+    TEMPLATE = "    \draw[%s] (%.02f,%.02f) -- (%.02f,%.02f);\n"
     s = TEMPLATE % (color, a[0], a[1], b[0], b[1])
     return s
 
@@ -64,9 +64,9 @@ def draw_rectangle(p1, p2):
 
 
 if __name__ == '__main__':
-    N = 2
+    N = 80
     with open("buildings.tex", "w") as f:
-        for rect in generate_rectangles(N, 5, 10, 0, SCOPE_1):
+        for rect in generate_rectangles(N, 2, 8, 0, SCOPE_1):
             projection = project_rectangle(*rect)
             for line in draw_rectangle(*projection):
                 f.write(line)

@@ -42,7 +42,10 @@ def generate_rectangles(n, r1, r2, theta1, theta2):
 
     for i in range(0, n):
         r = r2 - i * ((r2 - r1) / (n-1))
-        theta = uniform(theta1, theta2)
+        j = min(i, n / 2)
+        theta_b1 = theta1 + (0.25 - (j / n)) * (theta2 - theta1) 
+        theta_b2 = theta2 - (0.25 - (j / n)) * (theta2 - theta1) 
+        theta = uniform(theta_b1, theta_b2)
         width = uniform(MEAN_WIDTH * 0.5, MEAN_WIDTH * 1.5)
         height = uniform(MEAN_HEIGHT * 0.5, MEAN_HEIGHT * 1.5)
         percent = int(i * 80 / n) + 20
@@ -58,9 +61,9 @@ def draw_rectangle(p1, p2, fill):
 
 
 if __name__ == '__main__':
-    N = 200
+    N = 300
     with open("buildings.tex", "w") as f:
-        for rect, color in generate_rectangles(N, 1.2, 8, 0, SCOPE_1):
+        for rect, color in generate_rectangles(N, 1.5, 8, 0, SCOPE_1):
             projection = project_rectangle(*rect)
             for line in draw_rectangle(*projection, fill=color):
                 f.write(line)

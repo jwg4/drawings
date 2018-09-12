@@ -70,19 +70,20 @@ def create_contour(level=0, xmax=100, scale=5):
     x = 0
     y = level
     while x < xmax:
-        yield (x, y)
-        x = x + scale + randint(0, 2 * scale)
         y = y - scale + randint(0, 2 * scale)
+        yield (x, y)
+        x = x + scale + randint(0, scale)
     yield (xmax, y)
 
 
 if __name__ == '__main__':
     m = []
-    height = 20
-    for i in range(10):
-        size = 11 - i
+    height = 0
+    n = 20
+    for i in range(n):
+        size = n - i + 1
         height = height + size
-        f = list(create_contour(height, 100, size))
+        f = list(create_contour(height, 100, 2 * size))
         m = list(line_max(f, m))
         for line in draw_contour(m):
             print draw_line(*line)
